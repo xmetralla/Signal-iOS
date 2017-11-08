@@ -3505,13 +3505,6 @@ typedef NS_ENUM(NSInteger, MessagesRangeSizeMode) {
 
 #pragma mark - ConversationInputTextViewDelegate
 
-- (void)inputTextViewDidBecomeFirstResponder
-{
-    OWSAssert([NSThread isMainThread]);
-
-    [self scrollToBottomAnimated:YES];
-}
-
 - (void)inputTextViewSendMessagePressed
 {
     [self sendButtonPressed];
@@ -3630,7 +3623,7 @@ typedef NS_ENUM(NSInteger, MessagesRangeSizeMode) {
     [self updateLastVisibleTimestamp];
     [self autoLoadMoreIfNecessary];
 
-    if ([self isScrolledAwayFromBottom]) {
+    if (self.isUserScrolling && [self isScrolledAwayFromBottom]) {
         [self.inputToolbar endEditingTextMessage];
     }
 }
